@@ -1705,3 +1705,15 @@ Entries:
         accessory that will never wilt.
   id: 184
   time: '2026-03-12T04:11:20.0000000+00:00'
+- author: TrylobyteWasTaken
+  changes:
+    - type: Fix
+      message: Plant analyzers no longer brick after failing a DoAfter check.
+    - type: Fix
+      message: Air Alarms now save their device lists.
+    - type: Fix
+      message: >-
+        Plumbing devices should now load properly when a ship is loaded.  The
+        code is ugly but it works.
+  id: 185
+  time: '2026-03-12T04:11:45.0000000+00:00'
