@@ -87,6 +87,17 @@
     - type: HTN
       rootTask:
         task: SimpleRangedHostileCompound
+    - type: BorgChassis
+    maxModules: 5
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - XenoborgModuleGeneric
+      - BorgModuleSecurity
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+    hasMindState: drdinobonese
+    noMindState: drdinobonesl
     - type: Sprite
       drawdepth: Mobs
       sprite: _HL/Mobs/Characters/drdb.rsi
