@@ -2794,3 +2794,9 @@ Entries:
       message: Tactical Pack of Holding
   id: 298
   time: '2026-04-18T22:58:56.0000000+00:00'
+- author: MsEpic59
+  changes:
+    - type: Fix
+      message: Made XenoWeeds killable again!
+  id: 299
+  time: '2026-04-18T23:18:58.0000000+00:00'
