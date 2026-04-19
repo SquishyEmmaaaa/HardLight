@@ -85,7 +85,12 @@ public sealed partial class SalvageSystem
         }
 
         var mapId = map.MapId;
-        var sender = _mapSystem.GetMap(mapId); // HardLight
+
+        if (!_mapSystem.TryGetMap(mapId, out var sender) || sender == null || sender == EntityUid.Invalid)
+        {
+            Log.Warning($"Skipping salvage announcement for {ToPrettyString(mapUid)} because map {mapId} is no longer registered.");
+            return;
+        }
 
         // I love TComms and chat!!!
         _chat.ChatMessageToManyFiltered(
@@ -93,7 +98,7 @@ public sealed partial class SalvageSystem
             ChatChannel.Radio,
             text,
             text,
-            sender, // HardLight: _mapManager.GetMapEntityId(mapId)<sender
+            sender.Value, // HardLight: _mapManager.GetMapEntityId(mapId)<sender
             false,
             true,
             null);
