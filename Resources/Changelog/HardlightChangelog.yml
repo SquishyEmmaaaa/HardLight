@@ -2824,3 +2824,11 @@ Entries:
       message: Reduced NPC pathfinding stalls when targets or routes change rapidly.
   id: 303
   time: '2026-04-20T20:41:11.0000000+00:00'
+- author: Kronyxxx
+  changes:
+    - type: Fix
+      message: >-
+        Improved NanoChat server performance during message delivery and group
+        chat updates.
+  id: 304
+  time: '2026-04-20T20:41:43.0000000+00:00'
