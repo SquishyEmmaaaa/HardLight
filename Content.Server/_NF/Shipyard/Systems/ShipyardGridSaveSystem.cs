@@ -6,6 +6,9 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.CriminalRecords.Systems;
+using Content.Server.PsionicsRecords.Systems;
+using Content.Server.StationRecords.Systems;
 using Content.Server.Store.Components; // HardLight
 using Content.Server._HL.Shipyard; // HardLight
 using Content.Shared._Common.Consent; // HardLight
@@ -76,6 +79,9 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly CriminalRecordsConsoleSystem _criminalRecordsConsoles = default!;
+    [Dependency] private readonly GeneralStationRecordConsoleSystem _generalStationRecordConsoles = default!;
+    [Dependency] private readonly PsionicsRecordsConsoleSystem _psionicsRecordsConsoles = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IResourceManager _resourceManager = default!;
@@ -358,6 +364,8 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
 
         try
         {
+            ClearTransientRecordsConsoleState(gridUid);
+
             // Per user request: before purging / serializing, add SecretStashComponent to any entity contained
             // directly within a secret stash so that they are also considered preserved.
             TagStashContents(gridUid);
@@ -441,6 +449,13 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
             _entityManager.RemoveComponent<MindContainerComponent>(uid);
             _entityManager.RemoveComponent<ConsentComponent>(uid);
         }
+    }
+
+    private void ClearTransientRecordsConsoleState(EntityUid gridUid)
+    {
+        _generalStationRecordConsoles.ClearTransientStateOnGrid(gridUid);
+        _criminalRecordsConsoles.ClearTransientStateOnGrid(gridUid);
+        _psionicsRecordsConsoles.ClearTransientStateOnGrid(gridUid);
     }
 
     /// <summary>
@@ -897,6 +912,8 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
     public void CleanGridForSaving(EntityUid gridUid)
     {
         //_sawmill.Info($"Starting grid cleanup for {gridUid}");
+
+        ClearTransientRecordsConsoleState(gridUid);
 
         var allEntities = new HashSet<EntityUid>();
 
